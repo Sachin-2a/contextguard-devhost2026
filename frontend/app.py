@@ -36,28 +36,28 @@ with st.sidebar:
 # Pre-configured Demo Scenarios from the Pitch Deck / Team Brief
 DEMO_SCENARIOS = {
     "-- Select a Hackathon Demo Scenario --": None,
-    "1. Salary in HR Private Thread (Allowed)": {
+    "1. Salary in HR Private Thread (Allowed)[cite: 2, 5]": {
         "text": "Her salary is 18 LPA.",
         "role": "HR Manager",
         "source": "HR Portal Message",
         "dest": "HR_PRIVATE",
         "purpose": "Internal compensation verification"
     },
-    "2. Same Salary in Public Channel / External AI (Redacted/Blocked)": {
+    "2. Same Salary in Public Channel / External AI (Redacted/Blocked)[cite: 2, 5]": {
         "text": "Her salary is 18 LPA.",
         "role": "Team Member",
         "source": "Public Slack Channel",
         "dest": "PUBLIC_CHANNEL",
         "purpose": "Drafting public team announcement"
     },
-    "3. Hidden Health Detail — No Obvious Keyword (Detected & Redacted)": {
+    "3. Hidden Health Detail — No Obvious Keyword (Detected & Redacted)[cite: 2, 5]": {
         "text": "The report on my sugar levels came back high.",
         "role": "Employee",
         "source": "Shared Team Chat",
         "dest": "PUBLIC_CHANNEL",
         "purpose": "Rewriting message"
     },
-    "4. E-Commerce Order ID — False Positive Guard (Allowed)": {
+    "4. E-Commerce Order ID — False Positive Guard (Allowed)[cite: 2, 5]": {
         "text": "Order 4521 1234 5678 shipped.",
         "role": "Support Agent",
         "source": "Customer Ticket",
@@ -79,6 +79,17 @@ DEMO_SCENARIOS = {
 tab1, tab2, tab3 = st.tabs(["⚡ Live Gateway Inspection", "⚙️ Policy Rules & Matrix", "📋 Audit Logs & Compliance"])
 
 with tab1:
+    # 👋 NEW VISITOR ONBOARDING & GUIDED TOUR BOX
+    with st.expander("👋 **New Here? Click to view the 30-Second Quick-Start Guide**", expanded=False):
+        st.markdown("""
+        Welcome to **ContextGuard**! This gateway prevents sensitive data leaks when employees use AI tools by analyzing the **intent and context** of text, not just keywords[cite: 2, 3, 5].
+        
+        **How to test this prototype right now:**
+        1. **Pick a Scenario:** Choose one of the pre-built hackathon pitch scenarios from the dropdown below (e.g., comparing salary in an HR thread vs. a public channel)[cite: 2, 5].
+        2. **Review the Context Envelope:** Notice how changing the *Requester Role* or *Destination Channel* alters the privacy decision[cite: 3, 5].
+        3. **Click Intercept & Inspect:** Watch the 3-layer detection engine classify the risk and securely transform the payload before it hits the LLM[cite: 3, 5]!
+        """)
+    
     selected_demo = st.selectbox("🎯 **Quick Pitch Demo Scenario Selector:**", list(DEMO_SCENARIOS.keys()))
 
     default_text = "Type or paste your message or document snippet here..."
