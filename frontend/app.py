@@ -17,45 +17,20 @@ st.set_page_config(
 
 init_db()
 
-# Custom CSS for Enterprise SaaS Styling
-st.markdown("""
-    <style>
-    .main-title {
-        font-size: 2rem;
-        font-weight: 800;
-        color: #0F172A;
-        letter-spacing: -0.025em;
-        margin-bottom: 0px;
-    }
-    .subtitle {
-        font-size: 1rem;
-        color: #64748B;
-        margin-bottom: 1.5rem;
-    }
-    .metric-card {
-        background-color: #FFFFFF;
-        border: 1px solid #E2E8F0;
-        padding: 1rem;
-        border-radius: 0.5rem;
-        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
-    }
-    </style>
-""", unsafe_allow_html=True)
-
 # App Header
-st.markdown('<p class="main-title">🛡️ ContextGuard Enterprise Gateway</p>', unsafe_allow_html=True)
-st.markdown('<p class="subtitle">Autonomous AI Governance & Context-Aware Data Loss Prevention (DLP)</p>', unsafe_allow_html=True)
+st.title("🛡️ ContextGuard Enterprise Gateway")
+st.caption("Autonomous AI Governance & Context-Aware Data Loss Prevention (DLP)[cite: 5]")
 
 # Sidebar for Enterprise Controls & Status
 with st.sidebar:
-    st.markdown("### 🏢 Enterprise Console")
+    st.header("🏢 Enterprise Console")
     st.success("🟢 Gateway Status: Online\n\n⚡ Engine: Active (3-Layer + Policy)")
     st.markdown("---")
-    st.markdown("### 🎛️ Global Guardrails")
-    strict_mode = st.toggle("Strict DPDP Act Compliance", value=True)
+    st.subheader("🎛️ Global Guardrails")
+    strict_mode = st.toggle("Strict DPDP Act Compliance[cite: 5]", value=True)
     auto_vault = st.toggle("Token Vault Auto-De-tokenization", value=True)
     st.markdown("---")
-    st.markdown("### 👥 Active Tenant")
+    st.subheader("👥 Active Tenant")
     st.text("Org: Enterprise Corp (IN-BLR)\nLicense: Developer Tier\nAPI Latency: 24ms")
 
 # Pre-configured Demo Scenarios from the Pitch Deck / Team Brief
@@ -104,7 +79,6 @@ DEMO_SCENARIOS = {
 tab1, tab2, tab3 = st.tabs(["⚡ Live Gateway Inspection", "⚙️ Policy Rules & Matrix", "📋 Audit Logs & Compliance"])
 
 with tab1:
-    # Scenario Picker Banner
     selected_demo = st.selectbox("🎯 **Quick Pitch Demo Scenario Selector:**", list(DEMO_SCENARIOS.keys()))
 
     default_text = "Type or paste your message or document snippet here..."
@@ -123,19 +97,19 @@ with tab1:
 
     st.divider()
 
-    col_input, col_env = st.columns([3, 2], gap="large")
+    col_input, col_env = st.columns(2, gap="large")
 
     with col_input:
-        st.markdown("#### 💬 1. Inbound Prompt / Payload")
+        st.subheader("💬 1. Inbound Prompt / Payload")
         user_text = st.text_area(
             "Text sent by user/system into AI tool:",
             value=default_text,
-            height=140
+            height=160
         )
         run_btn = st.button("🚀 Intercept & Inspect Payload", type="primary", use_container_width=True)
 
     with col_env:
-        st.markdown("#### 📦 2. Context Envelope Metadata")
+        st.subheader("📦 2. Context Envelope Metadata[cite: 3, 5]")
         with st.container(border=True):
             role = st.selectbox(
                 "Requester Role", 
@@ -152,7 +126,7 @@ with tab1:
             purpose = st.text_input("Processing Purpose", value=default_purpose)
 
     if run_btn:
-        with st.spinner("Executing 3-Layer Detection & Policy Evaluation..."):
+        with st.spinner("Executing 3-Layer Detection & Policy Evaluation...[cite: 3, 5]"):
             req = GatewayRequest(
                 text=user_text,
                 envelope=ContextEnvelope(requester_role=role, data_source=source, destination=dest, purpose=purpose),
@@ -161,7 +135,7 @@ with tab1:
             res = inspect_and_process(req)
 
         st.divider()
-        st.markdown("### 📊 Inspection & Enforcement Summary")
+        st.subheader("📊 Inspection & Enforcement Summary")
 
         # Metrics Row
         m1, m2, m3, m4 = st.columns(4)
